@@ -1,0 +1,8 @@
+{
+  "name": "reading",
+  "namespace": "readings",
+  "label_field": "reading",
+  "disable_timestamp": false,
+  "fields": null,
+  "is_system_schema": true
+}

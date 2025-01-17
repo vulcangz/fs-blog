@@ -1,0 +1,56 @@
+{
+  "name": "post",
+  "namespace": "posts",
+  "label_field": "cover_image",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "user",
+      "label": "User",
+      "relation": {
+        "schema": "user",
+        "field": "posts",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "likes",
+      "label": "Likes",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "like",
+        "field": "post",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": true
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "readings",
+      "label": "Readings",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "reading",
+        "field": "post",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    }
+  ],
+  "is_system_schema": true
+}

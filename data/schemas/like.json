@@ -1,0 +1,34 @@
+{
+  "name": "like",
+  "namespace": "likes",
+  "label_field": "like",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "user",
+      "label": "User",
+      "relation": {
+        "schema": "user",
+        "field": "likes",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "post",
+      "label": "Post",
+      "relation": {
+        "schema": "post",
+        "field": "likes",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      }
+    }
+  ],
+  "is_system_schema": true
+}

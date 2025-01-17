@@ -1,0 +1,21 @@
+{
+  "name": "reading",
+  "namespace": "readings",
+  "label_field": "reading",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "post",
+      "label": "Post",
+      "relation": {
+        "schema": "post",
+        "field": "readings",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      }
+    }
+  ],
+  "is_system_schema": true
+}

@@ -1,0 +1,21 @@
+{
+  "name": "post",
+  "namespace": "posts",
+  "label_field": "cover_image",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "user",
+      "label": "User",
+      "relation": {
+        "schema": "user",
+        "field": "posts",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      }
+    }
+  ],
+  "is_system_schema": true
+}

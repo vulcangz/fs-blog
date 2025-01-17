@@ -1,0 +1,8 @@
+{
+  "name": "follow",
+  "namespace": "follows",
+  "label_field": "follow",
+  "disable_timestamp": false,
+  "fields": null,
+  "is_system_schema": true
+}

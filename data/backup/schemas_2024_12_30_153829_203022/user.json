@@ -1,0 +1,26 @@
+{
+  "name": "user",
+  "namespace": "users",
+  "label_field": "username",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "profile",
+      "label": "Profile",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "profile",
+        "field": "user",
+        "type": "o2o",
+        "owner": true,
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    }
+  ],
+  "is_system_schema": true
+}

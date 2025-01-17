@@ -1,0 +1,21 @@
+{
+  "name": "follow",
+  "namespace": "follows",
+  "label_field": "follow",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "followingUser",
+      "label": "FollowingUser",
+      "relation": {
+        "schema": "user",
+        "field": "following",
+        "type": "o2m",
+        "fk_columns": null,
+        "optional": false
+      }
+    }
+  ],
+  "is_system_schema": true
+}

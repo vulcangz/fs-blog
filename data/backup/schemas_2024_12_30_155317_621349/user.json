@@ -1,0 +1,94 @@
+{
+  "name": "user",
+  "namespace": "users",
+  "label_field": "username",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "profile",
+      "label": "Profile",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "profile",
+        "field": "user",
+        "type": "o2o",
+        "owner": true,
+        "fk_columns": null,
+        "optional": true
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "posts",
+      "label": "Posts",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "post",
+        "field": "user",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": true
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "likes",
+      "label": "Likes",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "like",
+        "field": "user",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "readings",
+      "label": "Readings",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "reading",
+        "field": "user",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    },
+    {
+      "type": "relation",
+      "name": "following",
+      "label": "Following",
+      "optional": true,
+      "sortable": true,
+      "renderer": {},
+      "relation": {
+        "schema": "follow",
+        "field": "followingUser",
+        "type": "o2m",
+        "owner": true,
+        "fk_columns": null,
+        "optional": false
+      },
+      "db": {}
+    }
+  ],
+  "is_system_schema": true
+}

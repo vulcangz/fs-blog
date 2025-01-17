@@ -1,0 +1,21 @@
+{
+  "name": "profile",
+  "namespace": "profiles",
+  "label_field": "name",
+  "disable_timestamp": false,
+  "fields": [
+    {
+      "type": "relation",
+      "name": "user",
+      "label": "User",
+      "relation": {
+        "schema": "user",
+        "field": "profile",
+        "type": "o2o",
+        "fk_columns": null,
+        "optional": false
+      }
+    }
+  ],
+  "is_system_schema": true
+}
