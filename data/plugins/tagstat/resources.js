@@ -3,7 +3,7 @@
 /** @param {FsContext} ctx */
 const freq = async (ctx) => {
     const tx = $db().Tx(ctx);
-    
+
     var pts = [];
     try {
         pts = tx.Query(
@@ -20,11 +20,12 @@ const freq = async (ctx) => {
 
             console.log("affected rows:", result);
         }
+
+        tx.Commit();
     } catch (err) {
         console.log("error:", err);
+        tx.Rollback();
     }
-
-    tx.Rollback();
 
     return {
         pts,
