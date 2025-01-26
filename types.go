@@ -3,13 +3,24 @@ package main
 import "time"
 
 type Profile struct {
-	Name        string `json:"name"`
-	UserID      uint64 `json:"user_id"`
-	Nickname    string `json:"nickname"`
-	Bio         string `json:"bio"`
-	Work        string `json:"work"`
-	Education   string `json:"education"`
-	CodingSkill string `json:"coding_skill"`
+	Name            string `json:"name"`
+	UserID          uint64 `json:"user_id"`
+	Nickname        string `json:"nickname"`
+	Bio             string `json:"bio" fs:"optional;"`
+	Image           string `json:"image" fs:"optional;"`
+	Work            string `json:"work" fs:"optional;"`
+	Education       string `json:"education" fs:"optional;"`
+	CodingSkill     string `json:"coding_skill" fs:"optional;"`
+	WebsiteURL      string `json:"website_url" fs:"optional;"`
+	Location        string `json:"location" fs:"optional;"`
+	Learning        string `json:"learning" fs:"optional;"`
+	Avaliable       string `json:"avaliable" fs:"optional;"`
+	Hacking         string `json:"hacking" fs:"optional;"`
+	Background      string `json:"background" fs:"optional;"`
+	BrandColor1     string `json:"brand_color1" fs:"optional;"`
+	GithubUsername  string `json:"github_username" fs:"optional;"`
+	TwitterUsername string `json:"twitter_username" fs:"optional;"`
+	GoogleUsername  string `json:"google_username" fs:"optional;"`
 }
 
 type Tag struct {
