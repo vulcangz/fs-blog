@@ -9,7 +9,10 @@ import (
 
 	"github.com/fastschema/fastschema"
 	"github.com/fastschema/fastschema/db"
+	"github.com/fastschema/fastschema/entity"
 	"github.com/fastschema/fastschema/fs"
+	"github.com/fastschema/fastschema/pkg/auth"
+	"github.com/fastschema/fastschema/pkg/errors"
 	"github.com/fastschema/fastschema/pkg/utils"
 	"github.com/leandro-lugaresi/hub"
 )
@@ -70,6 +73,7 @@ func main() {
 	// now just for post pageview count
 	eventBus(app)
 
+	// Add a pre resolve hook for pageview counter
 	app.OnPreResolve(func(ctx fs.Context) error {
 		resource := ctx.Resource()
 		app.Logger().Debug(resource.ID())
@@ -88,6 +92,81 @@ func main() {
 
 		return nil
 	})
+
+	// Add a resource for OAuth provider GitHub user retrieve 'me' info.
+	app.AddResource(fs.Post("/api/auth/github/me", func(c fs.Context, payload *MeReq) (*MeResponse, error) {
+		user, err := db.Query[OAuthUserData](
+			c, app.DB(),
+			"SELECT `users`.`id` AS id, `users`.`username` AS name, `users`.`email`, `users`.`provider`, `t1`.`nickname`, `t1`.`image` FROM `users` JOIN `profiles` AS `t1` ON `users`.`id` = `t1`.`user_id` WHERE `users`.`username` = ? OR `users`.`email` = ?",
+			payload.Username,
+			payload.Email,
+		)
+		if err != nil {
+			if db.IsNotFound(err) {
+				return nil, errors.Unauthorized()
+			}
+			return nil, err
+		}
+
+		if user == nil {
+			return nil, errors.NotFound()
+		}
+
+		result, err := githubLogin(c, app, &GitHubLogin{
+			Login: payload.Username,
+			Email: payload.Email,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		resp := &MeResponse{}
+		resp.User = user[0]
+		resp.Token = result.Token
+		resp.Expires = result.Expires
+
+		return resp, nil
+	}, &fs.Meta{Public: true}))
+
+	// Add a resource for OAuth provider GitHub user auto register
+	app.AddResource(fs.Post("/api/auth/github/register", func(c fs.Context, payload *OAuthRegister) (*OAuthRegisterResponse, error) {
+		userEntity := payload.Entity("auto")
+		userData := &OAuthUserData{}
+		if err := db.WithTx(app.DB(), c, func(tx db.Client) error {
+			user, err := db.Builder[*fs.User](tx).Create(c, userEntity)
+			if err != nil {
+				c.Logger().Errorf(auth.MSG_USER_SAVE_ERROR+": %w", err)
+				return auth.ERR_SAVE_USER
+			}
+
+			userData = &OAuthUserData{
+				ID:    user.ID,
+				Name:  user.Username,
+				Email: user.Email,
+			}
+
+			return nil
+		}); err != nil {
+			c.Logger().Error(auth.MSG_USER_SAVE_ERROR, err)
+			return nil, auth.ERR_SAVE_USER
+		}
+
+		result, err := githubLogin(c, app, &GitHubLogin{
+			Login: payload.Username,
+			Email: payload.Email,
+		})
+
+		if err != nil {
+			return nil, err
+		}
+
+		resp := &OAuthRegisterResponse{}
+		resp.User = userData
+		resp.Token = result.Token
+		resp.Expires = result.Expires
+
+		return resp, nil
+	}, &fs.Meta{Public: true}))
 
 	log.Fatal(app.Start())
 }
@@ -120,4 +199,62 @@ func eventBus(app *fastschema.App) {
 
 		wg.Done()
 	}(sub)
+}
+
+func githubLogin(c fs.Context, app *fastschema.App, payload *GitHubLogin) (*GitHubLoginResponse, error) {
+	if payload == nil || payload.Login == "" || payload.Email == "" {
+		return nil, errors.UnprocessableEntity(auth.MSG_INVALID_LOGIN_OR_PASSWORD)
+	}
+
+	user, err := db.Builder[*fs.User](app.DB()).
+		Where(db.Or(
+			db.EQ("username", payload.Login),
+			db.EQ("email", payload.Email),
+		)).
+		Select(
+			"id",
+			"username",
+			"email",
+			"password",
+			"provider",
+			"provider_id",
+			"provider_username",
+			"active",
+			"roles",
+			entity.FieldCreatedAt,
+			entity.FieldUpdatedAt,
+			entity.FieldDeletedAt,
+		).
+		First(c)
+	if err != nil && !db.IsNotFound(err) {
+		c.Logger().Error(err)
+		return nil, errors.InternalServerError(auth.MSG_CHECKING_USER_ERROR)
+	}
+
+	if user == nil {
+		return nil, errors.UnprocessableEntity(auth.MSG_INVALID_LOGIN_OR_PASSWORD)
+	}
+
+	if !user.Active {
+		return nil, errors.Unauthorized(auth.MSG_USER_IS_INACTIVE)
+	}
+
+	if err := checkToken(payload.Token, "saved-github-accessToken"); err != nil {
+		return nil, errors.UnprocessableEntity(auth.MSG_INVALID_LOGIN_OR_PASSWORD)
+	}
+
+	jwtToken, exp, err := user.JwtClaim(app.Key())
+	if err != nil {
+		return nil, err
+	}
+
+	return &GitHubLoginResponse{Token: jwtToken, Expires: exp}, nil
+}
+
+// checkToken, Just simulate verifying accessToken
+func checkToken(accessToken, existedToken string) error {
+	if accessToken != "" && accessToken == existedToken {
+		return nil
+	}
+	return nil
 }

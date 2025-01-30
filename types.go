@@ -1,6 +1,11 @@
 package main
 
-import "time"
+import (
+	"time"
+
+	"github.com/fastschema/fastschema/entity"
+	"github.com/fastschema/fastschema/fs"
+)
 
 type Profile struct {
 	Name            string `json:"name"`
@@ -69,12 +74,58 @@ type Follow struct {
 	FollowingUserID uint64 `json:"followingUser_id" `
 }
 
-type Payload struct {
-	ID      int    `json:"id"`
-	Comment string `json:"comment"`
+type MeReq struct {
+	Username string  `json:"username"`
+	Email    string  `json:"email"`
+	Token    *string `json:"token"`
 }
 
-type Response struct {
-	Success bool   `json:"success"`
-	Message string `json:"message"`
+type MeResponse struct {
+	User OAuthUserData `json:"user"`
+	GitHubLoginResponse
+}
+
+type GitHubLogin struct {
+	Login string `json:"login"`
+	Email string `json:"email"`
+	Token string `json:"token"`
+}
+
+type GitHubLoginResponse struct {
+	Token   string    `json:"accessToken"`
+	Expires time.Time `json:"expires"`
+}
+
+type OAuthRegister struct {
+	Username         string `json:"username"`
+	Email            string `json:"email"`
+	Provider         string `json:"provider"`
+	ProviderID       string `json:"provider_id"`
+	ProviderUsername string `json:"provider_username"`
+}
+
+func (d *OAuthRegister) Entity(activationMethod string) *entity.Entity {
+	return entity.New().
+		Set("username", d.Username).
+		Set("email", d.Email).
+		Set("provider", d.Provider).
+		Set("active", activationMethod == "auto").
+		Set("provider_id", d.ProviderID).
+		Set("provider_username", d.ProviderUsername).
+		Set("roles", []*entity.Entity{
+			entity.New(fs.RoleUser.ID),
+		})
+}
+
+type OAuthRegisterResponse struct {
+	User *OAuthUserData `json:"user"`
+	GitHubLoginResponse
+}
+
+type OAuthUserData struct {
+	ID       uint64 `json:"id,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Nickname string `json:"nickname,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Image    string `json:"image"`
 }
