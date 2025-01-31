@@ -9,9 +9,9 @@ FastSchema is a No-Code Headless CMS, with built-in features: Admin Control Pane
 
 Thanks to the dev.to clone repository on GitHub for giving me the courage to try it.
 
-> **Note:** Please note that this is only an experimental demo system. The backend is basically stable, and the backend is still iterating... 
+> **Note:** Please note that this is only an experimental demo system. The backend is basically stable, and the frontend is still iterating... 
 
-The code was written for [this article](https://www.worldlink.com.cn/post/build-a-devto-style-multi-user-blog-with-fastschema-nextjs-nextauth-v5-and-chakra-ui.html).
+The code was written for this articles : [(1)](https://www.worldlink.com.cn/post/build-a-devto-style-multi-user-blog-with-fastschema-nextjs-nextauth-v5-and-chakra-ui.html), [(2)](https://www.worldlink.com.cn/post/build-a-devto-style-multi-user-blog-with-fastschema-nextjs-nextauth-v5-and-chakra-ui-2-design%20and%20realization).
 
 ## Tech Stack:
 
@@ -26,6 +26,7 @@ The code was written for [this article](https://www.worldlink.com.cn/post/build-
 
 > Backend
 
+-   Go
 -   FastSchema
 -   SQLite (with demo data)
 -   seeder
@@ -70,13 +71,22 @@ and that's all you need to get started!
 
 ## Acknowledgements
 
-- [FastSchema](https://github.com/fastschema/fastschema) for making this possible
-- [Next.js](https://github.com/vercel/next.js) for making this possible
+- [FastSchema](https://github.com/fastschema/fastschema) - for making this possible
+- [Next.js](https://github.com/vercel/next.js) - for making this possible
+- [Auth.js](https://github.com/nextauthjs/next-auth) - for Credentials & OAuth authentication
+- [Chakra UI](https://github.com/chakra-ui/chakra-ui) - For me, this is probably the best react component library to use
+- [SWR](https://github.com/vercel/swr) - "使用 SWR，组件将会不断地、自动获得最新数据流。UI 也会一直保持快速响应。"这毋庸置疑!
+- [DEV Community](https://dev.to/) - The source of this creativity
 - [MA-Ahmad/dev.to-clone](https://github.com/MA-Ahmad/dev.to-clone)
 - [Dev Community Clone](https://github.com/zwelhtetyan/dev.to-clone)
 - [spicy-tomato/tech-blog](https://github.com/spicy-tomato/tech-blog)
+- [Countries Autocomplete Component](https://github.com/jovanes-work/jtk-chakraui-autocomplete) - for search input autocomplete feature
+- [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) - for "Code of Conduct" generated
+- [terms-and-conditions-generator.github.io](https://github.com/terms-and-conditions-generator/terms-and-conditions-generator.github.io) - for "Terms and conditions" generated 
 - more...
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+The libraries and components used are copyrighted by their authors,
+
+Others by me: [MIT](https://choosealicense.com/licenses/mit/)
