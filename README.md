@@ -39,7 +39,7 @@ To get started with this project, run
 
 ```bash
   git clone https://github.com/vulcangz/fs-blog.git
-  cd blog
+  cd fs-blog
   go mod tidy
   go run .
 ```
