@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['@react-icons/all-files'],
+    optimizePackageImports: ['@chakra-ui/react', '@react-icons/all-files'],
   },
   images: {
     remotePatterns: [
