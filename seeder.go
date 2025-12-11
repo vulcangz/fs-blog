@@ -81,7 +81,7 @@ func PostSeeder(ctx context.Context, app *fastschema.App, quant int) {
 
 		_ = utils.Must(db.Builder[Post](app.DB()).Create(ctx, fs.Map{
 			"title":            gofakeit.SentenceSimple(),
-			"cover_image":      "https://fakeimg.pl/?text=Hello%20World&font=noto", // https://fakeimg.pl/350x200/?text=World&font=noto
+			"cover_image":      `https://picsum.photos/id/` + strconv.Itoa(i) + `/350/200`,
 			"content":          gofakeit.Paragraph(3, 10, 20, "\n\n"),
 			"published":        published,
 			"published_at":     published_at,
