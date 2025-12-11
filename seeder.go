@@ -117,4 +117,7 @@ func InitDB(ctx context.Context, app *fastschema.App) {
 	utils.Must(db.Exec(ctx, app.DB(), "DELETE FROM tags; DELETE FROM SQLITE_SEQUENCE WHERE name='tags';"))
 	utils.Must(db.Exec(ctx, app.DB(), "DELETE FROM posts; DELETE FROM SQLITE_SEQUENCE WHERE name='posts';"))
 	utils.Must(db.Exec(ctx, app.DB(), "DELETE FROM profiles; DELETE FROM SQLITE_SEQUENCE WHERE name='profiles';"))
+
+	// Delete test users(test101~test103)
+	utils.Must(db.Exec(ctx, app.DB(), "DELETE FROM users where username like 'test10%';"))
 }
