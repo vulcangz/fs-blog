@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strconv"
 	"sync"
 	"time"
 
@@ -81,10 +82,31 @@ func main() {
 		if resource.ID() == "api.content.detail" {
 			app.Logger().Debug("call visit count hook.")
 			app.Logger().Debug(ctx.Args())
+
+			postId := ctx.ArgInt("id")
+			if postId == 0 {
+				app.Logger().Debug("The ID is a string slug.")
+
+				post, err := db.Builder[*Post](app.DB()).
+					Where(db.EQ("slug", ctx.Arg("id"))).
+					Select(
+						"id",
+					).
+					First(ctx)
+				if err != nil && !db.IsNotFound(err) {
+					ctx.Logger().Error(err)
+					return errors.InternalServerError(auth.MSG_CHECKING_USER_ERROR)
+				}
+
+				app.Logger().Debug(post)
+				postId = int(post.ID)
+				ctx.SetArg("id", strconv.Itoa(int(post.ID)))
+			}
+
 			bus.Publish(hub.Message{
 				Name: postPageviewTopic,
 				Fields: hub.Fields{
-					"id":     ctx.ArgInt("id"),
+					"id":     postId,
 					"schema": ctx.Arg("schema"),
 				},
 			})

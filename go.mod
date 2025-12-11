@@ -5,6 +5,7 @@ go 1.23.2
 require (
 	github.com/brianvoe/gofakeit/v7 v7.1.2
 	github.com/fastschema/fastschema v0.6.2
+	github.com/gosimple/slug v1.15.0
 	github.com/leandro-lugaresi/hub v1.1.1
 )
 
@@ -70,6 +71,7 @@ require (
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/pprof v0.0.0-20240910150728-a0b0bb1d4134 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/gosimple/unidecode v1.0.1 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/hashicorp/hcl/v2 v2.22.0 // indirect
 	github.com/hjson/hjson-go/v4 v4.4.0 // indirect

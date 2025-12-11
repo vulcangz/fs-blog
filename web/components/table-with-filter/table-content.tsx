@@ -64,7 +64,7 @@ export const TableContent = ({
       </Thead>
       <Tbody>
         {data?.map((dataItem) => {
-          const trows = pluck(dataItem.data.items, ['id', 'title', 'published']);
+          const trows = pluck(dataItem.data.items, ['id', 'title', 'slug', 'published']);
           return trows.map((row, i) => (
             <Tr key={nanoid()}>
               {columns.map((column, index) => {
@@ -73,7 +73,7 @@ export const TableContent = ({
 
                 return (
                   <Td whiteSpace="nowrap" key={nanoid()}>
-                    <Link href={`/post/${row[0]}`}>{element}</Link>
+                    <Link href={`/post/${row[2]}`}>{element}</Link>
                   </Td>
                 );
               })}

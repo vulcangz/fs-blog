@@ -8,7 +8,7 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 import DashboardSkeleton from '@/components/skeletons/dashboard-skeleton';
 import { useMyDashStat } from '@/services/queries';
 import { Post, SubCategory } from '@/interfaces';
-import Left from '@/components/dashboard/layout/Left';
+import Left from '@/components/dashboard/layout/left';
 
 export default function Layout({
   children,

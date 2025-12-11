@@ -207,7 +207,7 @@ export const config = {
         session.user = token.user as any;
       }
       session.accessToken = token.accessToken as string;
-      console.log('auth session', session);
+      
       return session;
     }
   },

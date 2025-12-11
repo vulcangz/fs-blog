@@ -65,7 +65,7 @@ export default function SearchInput({...rest}) {
   const handleSelect = (value) => {
     console.log('handleSelect value=', value);
     setShowOptions(false);
-    router.push(`/post/${value.id}`);
+    router.push(`/post/${value.slug}`);
   };
 
   const handleClear = () => {

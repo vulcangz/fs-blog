@@ -12,11 +12,11 @@ import PostDetailSkeleton from '@/components/skeletons/post-detail-skeleton';
 import Footer from '@/components/layout/footer';
 
 export default function PostPage() {
-  const params = useParams<{ pid: string }>();
+  const params = useParams<{ slug: string }>();
   const { data: session } = useSession();
   const user = session?.user!;
 
-  const { data: postData, isLoading, error } = usePostDetail(params.pid);
+  const { data: postData, isLoading, error } = usePostDetail(params.slug);
   const post = postData?.data;
 
   if (isLoading) {

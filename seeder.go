@@ -11,6 +11,7 @@ import (
 	"github.com/fastschema/fastschema/entity"
 	"github.com/fastschema/fastschema/fs"
 	"github.com/fastschema/fastschema/pkg/utils"
+	"github.com/gosimple/slug"
 )
 
 // 27 tags
@@ -58,7 +59,6 @@ func PostSeeder(ctx context.Context, app *fastschema.App, quant int) {
 
 		// Query tags
 		postTags := utils.Must(db.Builder[*Tag](app.DB()).
-			// Where(db.In("name", tagNames)).
 			Where(db.Or(
 				db.EQ("name", tagNames[0]),
 				db.EQ("name", tagNames[1]),
@@ -79,8 +79,12 @@ func PostSeeder(ctx context.Context, app *fastschema.App, quant int) {
 			published_at = time.Now()
 		}
 
+		title := gofakeit.SentenceSimple()
+		slug.AppendTimestamp = true
+		slug := slug.Make(title)
 		_ = utils.Must(db.Builder[Post](app.DB()).Create(ctx, fs.Map{
-			"title":            gofakeit.SentenceSimple(),
+			"title":            title,
+			"slug":             slug,
 			"cover_image":      `https://picsum.photos/id/` + strconv.Itoa(i) + `/350/200`,
 			"content":          gofakeit.Paragraph(3, 10, 20, "\n\n"),
 			"published":        published,

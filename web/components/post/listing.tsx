@@ -41,7 +41,7 @@ function HashTagNewsHeading() {
 
 const List = () => {
   const { data, isLoading, error } = usePostRequest(
-    'id,title,view_count,created_at,user.username,tags',
+    'id,title,slug,view_count,created_at,user.username,tags',
     {},
     '-view_count'
   );
@@ -70,7 +70,7 @@ const List = () => {
     <Box as="section" bg="white" borderRadius="md" border="1px solid #E2E4E6">
       <HashTagDiscussHeading />
       {posts.slice(0, 7).map((list, index) => (
-        <ListBox title={list.title} category={list.view_count} slug={list.id} key={index} />
+        <ListBox title={list.title} category={list.view_count} slug={list.slug} key={index} />
       ))}
     </Box>
   );

@@ -25,6 +25,7 @@ export type Post = {
   id: number;
   cover_image: string;
   title: string;
+  slug: string;
   content: string;
   published: boolean;
   published_at: Date;

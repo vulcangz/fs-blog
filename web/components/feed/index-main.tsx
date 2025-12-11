@@ -94,7 +94,7 @@ function PostList({ tabIndex }: TabParmsType) {
   }
 
   const { data, setSize, size, isLoading, error } = usePostRequest(
-    'id,cover_image,title,likes,view_count,comments_count,time_to_read,created_at,user.username,tags',
+    'id,cover_image,title,slug,likes,view_count,comments_count,time_to_read,created_at,user.username,tags',
     filter,
     sort
   );

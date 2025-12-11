@@ -12,8 +12,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ChakraProvider>
           <SWRConfig
             value={{
-              fetcher
-              // refreshInterval: 3000,
+              fetcher,
+              refreshInterval: 60 * 1000
               // revalidateIfStale: false,
               // revalidateOnFocus: false,
               // revalidateOnReconnect: false,

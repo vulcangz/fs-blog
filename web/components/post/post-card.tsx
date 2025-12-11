@@ -114,7 +114,7 @@ export default function PostCard({ post, i }: { post: Post; i: any }) {
         {/* Body */}
         <Stack pl="10" spacing="1">
           <Heading fontSize="3xl">
-            <Link href={`/post/${post.id}`}>{post.title}</Link>
+            <Link href={`/post/${post.slug}`}>{post.title}</Link>
           </Heading>
 
           {/* Tags */}

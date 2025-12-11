@@ -95,7 +95,7 @@ export function useReadingRequest(postId: number, userId: number, pageSize?: num
 
 export function useReadingInfinite(postId: number, userId: number, tag: string, pageSize?: number) {
   const params: FilterParams = {
-    select: 'user_id,post_id,post.id,post.title,post.user,post.tags',
+    select: 'user_id,post_id,post.id,post.title,post.slug,post.user,post.tags',
     limit: pageSize ?? PAGE_SIZE
   };
 
@@ -183,8 +183,8 @@ export function useFollowRequest(sourceId: number, targetId: number) {
   return useSWR<FollowListRes>(sourceId > 0 && targetId > 0 ? `/content/follow/?${qs}` : null);
 }
 
-export function usePostDetail(pid: string) {
-  return useSWR<PostDetailRes>(pid ? `${PostBaseURL}${pid}${PostDetailURL}` : null);
+export function usePostDetail(slug: string) {
+  return useSWR<PostDetailRes>(slug ? `${PostBaseURL}${slug}${PostDetailURL}` : null);
 }
 
 export function useAutoSuggest(searchTerm: string | null) {
@@ -206,7 +206,7 @@ export function useAutoSuggest(searchTerm: string | null) {
 
 export function useAutoSuggestMutation(searchTerm: string | null) {
   const params: FilterParams = {
-    select: 'id,title,created_at',
+    select: 'id,title,slug,created_at',
     filter: {
       title: {
         $like: `%${searchTerm}%`
@@ -231,7 +231,7 @@ export function useAutoSuggestMutation(searchTerm: string | null) {
 
 export function useSearch(searchTerm: string, pageIndex: number) {
   const params: FilterParams = {
-    select: 'id,cover_image,title,likes,readings,time_to_read,created_at,user.username,tags',
+    select: 'id,cover_image,title,slug,likes,readings,time_to_read,created_at,user.username,tags',
     filter: {
       title: {
         $like: `%${searchTerm}%`
@@ -248,7 +248,7 @@ export function useSearch(searchTerm: string, pageIndex: number) {
 
 export function useSearchInfinite(searchTerm: string) {
   const params: FilterParams = {
-    select: 'id,cover_image,title,likes,readings,time_to_read,created_at,user.username,tags',
+    select: 'id,cover_image,title,slug,likes,readings,time_to_read,created_at,user.username,tags',
     filter: {
       title: {
         $like: `%${searchTerm}%`
@@ -272,7 +272,7 @@ export function useSearchInfinite(searchTerm: string) {
 export function useMyDashStat(userId: number) {
   const params: FilterParams = {
     select:
-      'id,title,published,view_count,comments_count,share_count,likes,readings,created_at,tags',
+      'id,title,slug,published,view_count,comments_count,share_count,likes,readings,created_at,tags',
     filter: {
       user_id: {
         $eq: userId
@@ -291,7 +291,7 @@ export function useMyDashStat(userId: number) {
 export function useMyPostsInfinite(userId: number, published: number) {
   const params: FilterParams = {
     select:
-      'id,cover_image,title,published,view_count,comments_count,share_count,likes,readings,created_at,user.username,user.created_at,user.likes,user.following,user.followedBy,user.profile,tags',
+      'id,cover_image,title,slug,published,view_count,comments_count,share_count,likes,readings,created_at,user.username,user.created_at,user.likes,user.following,user.followedBy,user.profile,tags',
     filter: {
       user_id: {
         $eq: userId
@@ -325,7 +325,7 @@ export function useMyPostsInfinite(userId: number, published: number) {
 export function useUserPostsInfinite(username: string) {
   const params: FilterParams = {
     select:
-      'id,cover_image,title,published,view_count,comments_count,share_count,likes,readings,created_at,user.username,user.created_at,user.likes,user.following,user.followedBy,user.profile,tags',
+      'id,cover_image,title,slug,published,view_count,comments_count,share_count,likes,readings,created_at,user.username,user.created_at,user.likes,user.following,user.followedBy,user.profile,tags',
     filter: {
       'user.username': {
         $eq: username
@@ -348,7 +348,7 @@ export function useUserPostsInfinite(username: string) {
 
 export function usePosts(pageIndex: number) {
   const params: FilterParams = {
-    select: 'id,cover_image,title,likes,readings,time_to_read,created_at,user.username,tags',
+    select: 'id,cover_image,title,slug,likes,readings,time_to_read,created_at,user.username,tags',
     limit: PAGE_SIZE,
     page: pageIndex
   };
@@ -363,7 +363,7 @@ export function usePostsInfinite() {
     if (previousPageData && !previousPageData['data'].items.length) return null;
 
     const params: FilterParams = {
-      select: 'id,cover_image,title,likes,readings,time_to_read,created_at,user.username,tags',
+      select: 'id,cover_image,title,slug,likes,readings,time_to_read,created_at,user.username,tags',
       limit: PAGE_SIZE,
       page: pageIndex + 1
     };
@@ -378,7 +378,7 @@ export function usePostsInfinite() {
 
 export function useTopicInfinite(tag: string) {
   const params: FilterParams = {
-    select: 'id,cover_image,title,created_at,user.username,tags',
+    select: 'id,cover_image,title,slug,created_at,user.username,tags',
     filter: {
       'tags.name': {
         $like: `%${tag.trim()}%`
@@ -402,7 +402,7 @@ export function useTopicInfinite(tag: string) {
 export function usePostRequest(select: string, filters: Filter, sort: string) {
   const params: FilterParams = {
     select:
-      'id,cover_image,title,view_count,comments_count,likes,readings,time_to_read,created_at,user.username,tags', //select.trim(),
+      'id,cover_image,title,slug,view_count,comments_count,likes,readings,time_to_read,created_at,user.username,tags', //select.trim(),
     filter: filters,
     limit: PAGE_SIZE,
     sort: sort.trim()

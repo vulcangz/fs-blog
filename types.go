@@ -40,6 +40,7 @@ type Post struct {
 	ID              uint64     `json:"id"`
 	CoverImage      string     `json:"cover_image" fs:"optional;"`
 	Title           string     `json:"title"`
+	Slug            string     `json:"slug" fs.db:"{'attr':'unique','collation':'utf8mb4_unicode_ci'}"`
 	Content         string     `json:"content"`
 	UserID          uint64     `json:"user_id"`
 	Published       bool       `json:"published" fs:"optional;default=0;sortable"`
