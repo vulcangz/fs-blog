@@ -37,6 +37,8 @@ To get started with this project, run
 
 ### Backend
 
+#### Start the services
+
 ```bash
   git clone https://github.com/vulcangz/fs-blog.git
   cd fs-blog
@@ -44,9 +46,9 @@ To get started with this project, run
   go run .
 ```
 
-visiting http://localhost:8000/dash 
+Admin Dashboard(FastSchema built-in): visiting http://localhost:8000/dash 
 
-### Test accounts
+#### Test accounts
 
 ```
 ADMIN: admin/123456
@@ -58,8 +60,18 @@ After logging in, administrators can access the documents: http://localhost:8000
 
 ### Frontend
 
+#### Set up environment variables
+
+copy the `.env.example` file in this directory to `.env.local` (which will be ignored by Git):
+
 ```bash  
   cd web
+  cp .env.example .env.local
+```
+
+#### Run Next.js in development mode
+
+```bash
   pnpm i
   pnpm dev
 ```
@@ -68,6 +80,11 @@ visiting http://localhost:3000
 
 and that's all you need to get started!
 
+#### Test accounts
+
+```
+User: test1~test5@example.com/123456
+```
 
 ## Acknowledgements
 
