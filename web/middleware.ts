@@ -10,10 +10,10 @@ export default auth((req) => {
   if (req.auth && req.auth.user) {
     const isNewUser =
       ignoreRedirectNewUser.indexOf(pathname) === -1 &&
-      (!req.auth.user.name || !(req.auth.user as any).nickname);
+      (!req.auth.user.username || !(req.auth.user as any).nickname);
 
     const isProfileSet =
-      pathname === '/new-user' && req.auth.user.name && (req.auth.user as any).nickname;
+      pathname === '/new-user' && req.auth.user.username && (req.auth.user as any).nickname;
 
     if (isNewUser) {
       return NextResponse.redirect(new URL('/new-user', req.url));

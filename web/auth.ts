@@ -82,11 +82,12 @@ export const config = {
         // profile information
         const profileObj = await resp.json();
         if (profileObj.data.total === 0) {
-          return {
-            user: { ...userObj.data } as any,
+          let user = {
+            ...userObj.data,
             accessToken: token,
             expires: tokenObj.data.expires
           };
+          return user;
         }
 
         const profile = profileObj.data.items[0];
