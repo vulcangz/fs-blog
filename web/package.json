@@ -19,7 +19,7 @@
     "framer-motion": "latest",
     "fs-blog-ui": "file:",
     "lodash.debounce": "^4.0.8",
-    "next": "^15.5.7",
+    "next": "^15.5.8",
     "next-auth": "^5.0.0-beta.30",
     "react": "^18",
     "react-dom": "^18",
