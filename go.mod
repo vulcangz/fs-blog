@@ -13,7 +13,7 @@ require (
 	ariga.io/atlas v0.27.0 // indirect
 	cloud.google.com/go/compute/metadata v0.5.2 // indirect
 	entgo.io/ent v0.14.1 // indirect
-	filippo.io/edwards25519 v1.1.0 // indirect
+	filippo.io/edwards25519 v1.1.1 // indirect
 	github.com/DATA-DOG/go-sqlmock v1.5.2 // indirect
 	github.com/Max-Sum/base32768 v0.0.0-20230304063302-18e6ce5945fd // indirect
 	github.com/abbot/go-http-auth v0.4.0 // indirect
